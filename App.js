@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { IonItem, IonLabel, IonInput, IonText, IonApp, IonPopover, IonButton, IonRouterOutlet, IonContent } from '@ionic/react';
+import { IonItem, IonBackdrop, IonLabel, IonInput, IonText, IonApp, IonPopover, IonButton, IonRouterOutlet, IonContent } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
 
@@ -23,15 +23,30 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+// import './components/popover.css'; 
+
+const saveInvoiceData = () => {
+  console.log('hep');
+  return null;
+}
+
+export const Backdrop = () => (
+  <IonContent>
+    <IonBackdrop tappable={false} />
+  </IonContent>
+);
+
 export const PopoverExample = () => {
   const [showPopover, setShowPopover] = useState(false);
+
 
   return (
     <>
       <IonPopover
         isOpen={showPopover}
         cssClass='my-custom-class'
-
+        showBackdrop='true'
+        backdropDismiss='false'
         onDidDismiss={e => setShowPopover(false)}
       >
         <IonContent className="ion-padding">
@@ -54,7 +69,7 @@ export const PopoverExample = () => {
             <IonLabel position="floating">Postinumero ja -toimipaikka</IonLabel>
             <IonInput></IonInput>
           </IonItem>
-          <IonText color="primary">
+          <IonText color="primary" className="ion-margin">
             Laskun tiedot
           </IonText>
           <IonItem>
@@ -105,9 +120,15 @@ export const PopoverExample = () => {
             <IonLabel position="floating">Huomautusaika</IonLabel>
             <IonInput></IonInput>
           </IonItem>
-          <IonButton>Tallenna lasku</IonButton>
+          <IonButton onClick={() => {
+            saveInvoiceData();
+            setShowPopover(false);
+          }}>
+
+            Tallenna lasku
+          </IonButton>
         </IonContent>
-      </IonPopover>
+      </IonPopover >
       <IonButton onClick={() => setShowPopover(true)}>Syötä laskun tiedot</IonButton>
     </>
   );

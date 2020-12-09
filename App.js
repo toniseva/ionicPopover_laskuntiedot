@@ -23,10 +23,45 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
-// import './components/popover.css'; 
+const invoiceData = [
+  {
+    "companyName": "",
+    "buyerName": "",
+    "streetAddress": "",
+    "zipCodeTown": "",
+    "invoiceNumber": "",
+    "referenceNumber": "",
+    "invoiceDate": "",
+    "dueDate": "",
+    "shippingDate": "",
+    "shippingMethod": "",
+    "paymentCondition": "",
+    "ourReference": "",
+    "yourReference": "",
+    "buyerOrderNumber": "",
+    "interestOfLatePayment": "",
+    "timeOfComplaint": "",
+  },
+]
 
 const saveInvoiceData = () => {
-  console.log('hep');
+  invoiceData['companyName'] = document.getElementById('companyName').value;
+  invoiceData['buyerName'] = document.getElementById('buyerName').value;
+  invoiceData['streetAddress'] = document.getElementById('streetAddress').value;
+  invoiceData['zipCodeTown'] = document.getElementById('zipCodeTown').value;
+  invoiceData['invoiceNumber'] = document.getElementById('invoiceNumber').value;
+  invoiceData['referenceNumber'] = document.getElementById('referenceNumber').value;
+  invoiceData['invoiceDate'] = document.getElementById('invoiceDate').value;
+  invoiceData['dueDate'] = document.getElementById('dueDate').value;
+  invoiceData['shippingDate'] = document.getElementById('shippingDate').value;
+  invoiceData['shippingMethod'] = document.getElementById('shippingMethod').value;
+  invoiceData['paymentCondition'] = document.getElementById('paymentCondition').value;
+  invoiceData['ourReference'] = document.getElementById('ourReference').value;
+  invoiceData['yourReference'] = document.getElementById('yourReference').value;
+  invoiceData['buyerOrderNumber'] = document.getElementById('buyerOrderNumber').value;
+  invoiceData['interestOfLatePayment'] = document.getElementById('interestOfLatePayment').value;
+  invoiceData['timeOfComplaint'] = document.getElementById('timeOfComplaint').value;
+  console.log(invoiceData);
   return null;
 }
 
@@ -38,7 +73,6 @@ export const Backdrop = () => (
 
 export const PopoverExample = () => {
   const [showPopover, setShowPopover] = useState(false);
-
 
   return (
     <>
@@ -55,70 +89,70 @@ export const PopoverExample = () => {
           </IonText>
           <IonItem>
             <IonLabel position="floating">Yrityksen nimi</IonLabel>
-            <IonInput></IonInput>
+            <IonInput id="companyName"></IonInput>
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Yhteyshenkilö</IonLabel>
-            <IonInput></IonInput>
+            <IonInput id="buyerName"></IonInput>
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Katuosoite</IonLabel>
-            <IonInput></IonInput>
+            <IonInput id="streetAddress"></IonInput>
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Postinumero ja -toimipaikka</IonLabel>
-            <IonInput></IonInput>
+            <IonInput id="zipCodeTown"></IonInput>
           </IonItem>
           <IonText color="primary" className="ion-margin">
             Laskun tiedot
           </IonText>
           <IonItem>
             <IonLabel position="floating">Laskun numero</IonLabel>
-            <IonInput></IonInput>
+            <IonInput id="invoiceNumber"></IonInput>
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Viitenumero</IonLabel>
-            <IonInput></IonInput>
+            <IonInput id="referenceNumber"></IonInput>
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Laskun pvm</IonLabel>
-            <IonInput></IonInput>
+            <IonInput id="invoiceDate"></IonInput>
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Eräpäivä</IonLabel>
-            <IonInput></IonInput>
+            <IonInput id="dueDate"></IonInput>
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Toimituspvm</IonLabel>
-            <IonInput></IonInput>
+            <IonInput id="shippingDate"></IonInput>
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Toimitustapa</IonLabel>
-            <IonInput></IonInput>
+            <IonInput id="shippingMethod"></IonInput>
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Maksuehto</IonLabel>
-            <IonInput></IonInput>
+            <IonInput id="paymentCondition"></IonInput>
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Viitteemme</IonLabel>
-            <IonInput></IonInput>
+            <IonInput id="ourReference"></IonInput>
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Viitteenne</IonLabel>
-            <IonInput></IonInput>
+            <IonInput id="yourReference"></IonInput>
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Ostajan tilausnumero</IonLabel>
-            <IonInput></IonInput>
+            <IonInput id="buyerOrderNumber"></IonInput>
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Viivästyskorko</IonLabel>
-            <IonInput></IonInput>
+            <IonInput id="interestOfLatePayment"></IonInput>
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Huomautusaika</IonLabel>
-            <IonInput></IonInput>
+            <IonInput id="timeOfComplaint"></IonInput>
           </IonItem>
           <IonButton onClick={() => {
             saveInvoiceData();

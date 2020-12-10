@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { IonItem, IonBackdrop, IonLabel, IonInput, IonText, IonApp, IonPopover, IonButton, IonRouterOutlet, IonContent } from '@ionic/react';
+import { IonAlert, IonItem, IonBackdrop, IonLabel, IonInput, IonText, IonApp, IonPopover, IonButton, IonRouterOutlet, IonContent } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
 
@@ -22,6 +22,9 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import { resolveTypeReferenceDirective } from 'typescript';
+
+let formFilled = false;
 
 const invoiceData = [
   {
@@ -45,6 +48,7 @@ const invoiceData = [
 ]
 
 const saveInvoiceData = () => {
+
   invoiceData['companyName'] = document.getElementById('companyName').value;
   invoiceData['buyerName'] = document.getElementById('buyerName').value;
   invoiceData['streetAddress'] = document.getElementById('streetAddress').value;
@@ -62,7 +66,43 @@ const saveInvoiceData = () => {
   invoiceData['interestOfLatePayment'] = document.getElementById('interestOfLatePayment').value;
   invoiceData['timeOfComplaint'] = document.getElementById('timeOfComplaint').value;
   console.log(invoiceData);
+
+  var x;
+  formFilled = true;
+  for (x in invoiceData) {
+    if (invoiceData[x] === "") {
+      formFilled = false;
+    }
+  }
+  console.log(formFilled);
+
+  if (!formFilled) {
+
+  }
+
+
+
   return null;
+}
+
+export const AlertExample = () => {
+
+  const [showAlert1, setShowAlert1] = useState(false);
+
+  return (
+
+    <IonAlert
+      isOpen={showAlert1}
+      onDidDismiss={() => setShowAlert1(false)}
+      cssClass='my-custom-class'
+      header={'Alert'}
+      subHeader={'Subtitle'}
+      message={'This is an alert message.'}
+      buttons={['OK']}
+    />
+
+  )
+
 }
 
 export const Backdrop = () => (
@@ -89,7 +129,7 @@ export const PopoverExample = () => {
           </IonText>
           <IonItem>
             <IonLabel position="floating">Yrityksen nimi</IonLabel>
-            <IonInput id="companyName"></IonInput>
+            <IonInput id="companyName" required></IonInput>
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Yhteyshenkilö</IonLabel>
@@ -158,7 +198,6 @@ export const PopoverExample = () => {
             saveInvoiceData();
             setShowPopover(false);
           }}>
-
             Tallenna lasku
           </IonButton>
         </IonContent>
@@ -172,6 +211,7 @@ const App = () => (
   <IonApp>
     <IonContent>
       <PopoverExample />
+      <AlertExample />
     </IonContent>
   </IonApp>
 );

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonGrid, IonRow, IonCol, IonItem, IonLabel, IonInput, IonText, IonApp, IonPopover, IonButton, IonContent } from '@ionic/react';
+import { IonGrid, IonRow, IonCol, IonDatetime, IonItem, IonLabel, IonInput, IonText, IonApp, IonPopover, IonButton, IonContent, IonIcon } from '@ionic/react';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -20,7 +20,11 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import './components/popover.css';
+import { calendarOutline } from 'ionicons/icons';
 
+let currentDate = new Date();
+const currentYear = currentDate.getFullYear();
+currentDate = currentDate.toISOString();
 let formFilled = false;
 
 const invoiceData = [
@@ -52,9 +56,21 @@ const saveInvoiceData = () => {
   invoiceData['zipCodeTown'] = document.getElementById('zipCodeTown').value;
   invoiceData['invoiceNumber'] = document.getElementById('invoiceNumber').value;
   invoiceData['referenceNumber'] = document.getElementById('referenceNumber').value;
-  invoiceData['invoiceDate'] = document.getElementById('invoiceDate').value;
-  invoiceData['dueDate'] = document.getElementById('dueDate').value;
-  invoiceData['shippingDate'] = document.getElementById('shippingDate').value;
+  if (document.getElementById('invoiceDate').value) {
+    invoiceData['invoiceDate'] = document.getElementById('invoiceDate').value;
+  } else {
+    invoiceData['invoiceDate'] = "";
+  }
+  if (document.getElementById('dueDate').value) {
+    invoiceData['dueDate'] = document.getElementById('dueDate').value;
+  } else {
+    invoiceData['dueDate'] = "";
+  }
+  if (document.getElementById('shippingDate').value) {
+    invoiceData['shippingDate'] = document.getElementById('shippingDate').value;
+  } else {
+    invoiceData['shippingDate'] = "";
+  }
   invoiceData['shippingMethod'] = document.getElementById('shippingMethod').value;
   invoiceData['paymentCondition'] = document.getElementById('paymentCondition').value;
   invoiceData['ourReference'] = document.getElementById('ourReference').value;
@@ -64,12 +80,10 @@ const saveInvoiceData = () => {
   invoiceData['timeOfComplaint'] = document.getElementById('timeOfComplaint').value;
   console.log(invoiceData);
 
-
-  console.log("valittu pvm " + invoiceData['invoiceDate']);
   var x;
   formFilled = true;
   for (x in invoiceData) {
-    if (invoiceData[x] === "") {
+    if (invoiceData[x] === "" || invoiceData[x] === null) {
       formFilled = false;
     }
   }
@@ -83,6 +97,54 @@ const saveInvoiceData = () => {
   console.log('tallennettu');
 
   return null;
+}
+
+export const InvoiceDatePicker = () => {
+  const [selectedDate, setSelectedDate] = useState(currentDate);
+
+  return (
+    <IonItem>
+      <IonLabel><IonIcon icon={calendarOutline}></IonIcon></IonLabel>
+      <IonDatetime id="invoiceDate"
+        displayFormat="DD MM YYYY"
+        min={currentYear}
+        max={currentYear + 50}
+        onIonChange={e => setSelectedDate(e.detail.value)}>
+      </IonDatetime>
+    </IonItem>
+  )
+}
+
+export const DueDatePicker = () => {
+  const [selectedDate, setSelectedDate] = useState(currentDate);
+
+  return (
+    <IonItem>
+      <IonLabel><IonIcon icon={calendarOutline}></IonIcon></IonLabel>
+      <IonDatetime id="dueDate"
+        displayFormat="DD MM YYYY"
+        min={currentYear}
+        max={currentYear + 50}
+        onIonChange={e => setSelectedDate(e.detail.value)}>
+      </IonDatetime>
+    </IonItem>
+  )
+}
+
+export const ShippingDatePicker = () => {
+  const [selectedDate, setSelectedDate] = useState(currentDate);
+
+  return (
+    <IonItem>
+      <IonLabel><IonIcon icon={calendarOutline}></IonIcon></IonLabel>
+      <IonDatetime id="shippingDate"
+        displayFormat="DD MM YYYY"
+        min={currentYear}
+        max={currentYear + 50}
+        onIonChange={e => setSelectedDate(e.detail.value)}>
+      </IonDatetime>
+    </IonItem>
+  )
 }
 
 export const PopoverExample = () => {
@@ -103,7 +165,7 @@ export const PopoverExample = () => {
               <IonCol>
                 <IonText color="primary">
                   Ostajan tiedot
-                </IonText>
+                  </IonText>
               </IonCol>
             </IonRow>
           </IonGrid>
@@ -123,19 +185,15 @@ export const PopoverExample = () => {
             <IonLabel position="floating">Postinumero ja -toimipaikka</IonLabel>
             <IonInput id="zipCodeTown"></IonInput>
           </IonItem>
-          <IonText color="primary"></IonText>
-
-          <IonRow><IonCol></IonCol></IonRow>
-          <IonRow>
-            <IonCol>
-              <IonText color="primary">
-                Laskun tiedot
+          <IonGrid>
+            <IonRow>
+              <IonCol>
+                <IonText color="primary" className="ion-margin-top">
+                  Laskun tiedot
                 </IonText>
-            </IonCol>
-          </IonRow>
-
-
-
+              </IonCol>
+            </IonRow>
+          </IonGrid>
           <IonItem>
             <IonLabel position="floating">Laskun numero</IonLabel>
             <IonInput id="invoiceNumber"></IonInput>
@@ -145,16 +203,16 @@ export const PopoverExample = () => {
             <IonInput id="referenceNumber"></IonInput>
           </IonItem>
           <IonItem>
-            <IonLabel position="floating">Laskun pvm</IonLabel>
-            <IonInput id="invoiceDate"></IonInput>
+            <IonText>Laskun pvm</IonText>
+            <InvoiceDatePicker />
           </IonItem>
           <IonItem>
-            <IonLabel position="floating">Eräpäivä</IonLabel>
-            <IonInput id="dueDate"></IonInput>
+            <IonText>Eräpäivä</IonText>
+            <DueDatePicker />
           </IonItem>
           <IonItem>
-            <IonLabel position="floating">Toimituspvm</IonLabel>
-            <IonInput id="shippingDate"></IonInput>
+            <IonText>Toimituspvm</IonText>
+            <ShippingDatePicker />
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Toimitustapa</IonLabel>

@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import { Redirect, Route } from 'react-router-dom';
 import { IonAlert, IonItem, IonBackdrop, IonLabel, IonInput, IonText, IonApp, IonPopover, IonButton, IonRouterOutlet, IonContent } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-import Home from './pages/Home';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -22,7 +19,6 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import { resolveTypeReferenceDirective } from 'typescript';
 
 let formFilled = false;
 
@@ -77,10 +73,12 @@ const saveInvoiceData = () => {
   console.log(formFilled);
 
   if (!formFilled) {
-
+    // setShowAlert1(true);
+    return;
   }
 
-
+  // tallenna laskun tiedot tässä
+  console.log('tallennettu');
 
   return null;
 }
@@ -105,11 +103,6 @@ export const AlertExample = () => {
 
 }
 
-export const Backdrop = () => (
-  <IonContent>
-    <IonBackdrop tappable={false} />
-  </IonContent>
-);
 
 export const PopoverExample = () => {
   const [showPopover, setShowPopover] = useState(false);
@@ -196,10 +189,15 @@ export const PopoverExample = () => {
           </IonItem>
           <IonButton onClick={() => {
             saveInvoiceData();
-            setShowPopover(false);
+            if (formFilled) {
+              setShowPopover(false);
+            } else {
+              setShowPopover(true);
+            };
           }}>
             Tallenna lasku
           </IonButton>
+          <IonButton onclick={() => setShowPopover(false)}>Poistu tallentamatta</IonButton>
         </IonContent>
       </IonPopover >
       <IonButton onClick={() => setShowPopover(true)}>Syötä laskun tiedot</IonButton>

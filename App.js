@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonAlert, IonItem, IonBackdrop, IonLabel, IonInput, IonText, IonApp, IonPopover, IonButton, IonRouterOutlet, IonContent } from '@ionic/react';
+import { IonGrid, IonRow, IonCol, IonItem, IonLabel, IonInput, IonText, IonApp, IonPopover, IonButton, IonContent } from '@ionic/react';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -19,6 +19,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import './components/popover.css';
 
 let formFilled = false;
 
@@ -63,6 +64,8 @@ const saveInvoiceData = () => {
   invoiceData['timeOfComplaint'] = document.getElementById('timeOfComplaint').value;
   console.log(invoiceData);
 
+
+  console.log("valittu pvm " + invoiceData['invoiceDate']);
   var x;
   formFilled = true;
   for (x in invoiceData) {
@@ -70,7 +73,6 @@ const saveInvoiceData = () => {
       formFilled = false;
     }
   }
-  console.log(formFilled);
 
   if (!formFilled) {
     // setShowAlert1(true);
@@ -82,27 +84,6 @@ const saveInvoiceData = () => {
 
   return null;
 }
-
-export const AlertExample = () => {
-
-  const [showAlert1, setShowAlert1] = useState(false);
-
-  return (
-
-    <IonAlert
-      isOpen={showAlert1}
-      onDidDismiss={() => setShowAlert1(false)}
-      cssClass='my-custom-class'
-      header={'Alert'}
-      subHeader={'Subtitle'}
-      message={'This is an alert message.'}
-      buttons={['OK']}
-    />
-
-  )
-
-}
-
 
 export const PopoverExample = () => {
   const [showPopover, setShowPopover] = useState(false);
@@ -117,9 +98,15 @@ export const PopoverExample = () => {
         onDidDismiss={e => setShowPopover(false)}
       >
         <IonContent className="ion-padding">
-          <IonText color="primary">
-            Ostajan tiedot
-          </IonText>
+          <IonGrid>
+            <IonRow>
+              <IonCol>
+                <IonText color="primary">
+                  Ostajan tiedot
+                </IonText>
+              </IonCol>
+            </IonRow>
+          </IonGrid>
           <IonItem>
             <IonLabel position="floating">Yrityksen nimi</IonLabel>
             <IonInput id="companyName" required></IonInput>
@@ -136,9 +123,19 @@ export const PopoverExample = () => {
             <IonLabel position="floating">Postinumero ja -toimipaikka</IonLabel>
             <IonInput id="zipCodeTown"></IonInput>
           </IonItem>
-          <IonText color="primary" className="ion-margin">
-            Laskun tiedot
-          </IonText>
+          <IonText color="primary"></IonText>
+
+          <IonRow><IonCol></IonCol></IonRow>
+          <IonRow>
+            <IonCol>
+              <IonText color="primary">
+                Laskun tiedot
+                </IonText>
+            </IonCol>
+          </IonRow>
+
+
+
           <IonItem>
             <IonLabel position="floating">Laskun numero</IonLabel>
             <IonInput id="invoiceNumber"></IonInput>
@@ -209,7 +206,6 @@ const App = () => (
   <IonApp>
     <IonContent>
       <PopoverExample />
-      <AlertExample />
     </IonContent>
   </IonApp>
 );

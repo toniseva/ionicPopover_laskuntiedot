@@ -19,6 +19,8 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+
+//-------------------------------------------
 import './components/popover.css';
 import { calendarOutline } from 'ionicons/icons';
 
@@ -48,8 +50,16 @@ const invoiceData = [
   },
 ]
 
+//-----------------------------------------------------
+const dateToString = (dt) => {
+  var date = new Date(dt);
+  let returnString = (date.getDate() + ". " + (+date.getMonth() + 1).toString() + ". " + date.getFullYear()).toString();
+  return returnString;
+}
+//-----------------------------------------------------
 const saveInvoiceData = () => {
 
+  // read form data
   invoiceData['companyName'] = document.getElementById('companyName').value;
   invoiceData['buyerName'] = document.getElementById('buyerName').value;
   invoiceData['streetAddress'] = document.getElementById('streetAddress').value;
@@ -57,17 +67,17 @@ const saveInvoiceData = () => {
   invoiceData['invoiceNumber'] = document.getElementById('invoiceNumber').value;
   invoiceData['referenceNumber'] = document.getElementById('referenceNumber').value;
   if (document.getElementById('invoiceDate').value) {
-    invoiceData['invoiceDate'] = document.getElementById('invoiceDate').value;
+    invoiceData['invoiceDate'] = dateToString(document.getElementById('invoiceDate').value);
   } else {
     invoiceData['invoiceDate'] = "";
   }
   if (document.getElementById('dueDate').value) {
-    invoiceData['dueDate'] = document.getElementById('dueDate').value;
+    invoiceData['dueDate'] = dateToString(document.getElementById('dueDate').value);
   } else {
     invoiceData['dueDate'] = "";
   }
   if (document.getElementById('shippingDate').value) {
-    invoiceData['shippingDate'] = document.getElementById('shippingDate').value;
+    invoiceData['shippingDate'] = dateToString(document.getElementById('shippingDate').value);
   } else {
     invoiceData['shippingDate'] = "";
   }
@@ -80,10 +90,11 @@ const saveInvoiceData = () => {
   invoiceData['timeOfComplaint'] = document.getElementById('timeOfComplaint').value;
   console.log(invoiceData);
 
+  // check if form is filled
   var x;
   formFilled = true;
   for (x in invoiceData) {
-    if (invoiceData[x] === "" || invoiceData[x] === null) {
+    if (invoiceData[x] === "") {
       formFilled = false;
     }
   }
@@ -99,6 +110,7 @@ const saveInvoiceData = () => {
   return null;
 }
 
+//-----------------------------------------------------
 export const InvoiceDatePicker = () => {
   const [selectedDate, setSelectedDate] = useState(currentDate);
 
@@ -107,7 +119,7 @@ export const InvoiceDatePicker = () => {
       <IonLabel><IonIcon icon={calendarOutline}></IonIcon></IonLabel>
       <IonDatetime id="invoiceDate"
         displayFormat="DD MM YYYY"
-        min={currentYear}
+        min={currentYear - 5}
         max={currentYear + 50}
         onIonChange={e => setSelectedDate(e.detail.value)}>
       </IonDatetime>
@@ -115,6 +127,7 @@ export const InvoiceDatePicker = () => {
   )
 }
 
+//-----------------------------------------------------
 export const DueDatePicker = () => {
   const [selectedDate, setSelectedDate] = useState(currentDate);
 
@@ -123,7 +136,7 @@ export const DueDatePicker = () => {
       <IonLabel><IonIcon icon={calendarOutline}></IonIcon></IonLabel>
       <IonDatetime id="dueDate"
         displayFormat="DD MM YYYY"
-        min={currentYear}
+        min={currentYear - 5}
         max={currentYear + 50}
         onIonChange={e => setSelectedDate(e.detail.value)}>
       </IonDatetime>
@@ -131,6 +144,7 @@ export const DueDatePicker = () => {
   )
 }
 
+//-----------------------------------------------------
 export const ShippingDatePicker = () => {
   const [selectedDate, setSelectedDate] = useState(currentDate);
 
@@ -139,7 +153,7 @@ export const ShippingDatePicker = () => {
       <IonLabel><IonIcon icon={calendarOutline}></IonIcon></IonLabel>
       <IonDatetime id="shippingDate"
         displayFormat="DD MM YYYY"
-        min={currentYear}
+        min={currentYear - 5}
         max={currentYear + 50}
         onIonChange={e => setSelectedDate(e.detail.value)}>
       </IonDatetime>
@@ -147,7 +161,8 @@ export const ShippingDatePicker = () => {
   )
 }
 
-export const PopoverExample = () => {
+//-----------------------------------------------------
+export const InvoicePopover = () => {
   const [showPopover, setShowPopover] = useState(false);
 
   return (
@@ -165,7 +180,7 @@ export const PopoverExample = () => {
               <IonCol>
                 <IonText color="primary">
                   Ostajan tiedot
-                  </IonText>
+                </IonText>
               </IonCol>
             </IonRow>
           </IonGrid>
@@ -260,10 +275,11 @@ export const PopoverExample = () => {
   );
 };
 
+//-----------------------------------------------------
 const App = () => (
   <IonApp>
     <IonContent>
-      <PopoverExample />
+      <InvoicePopover />
     </IonContent>
   </IonApp>
 );
